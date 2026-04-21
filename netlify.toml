@@ -3,5 +3,5 @@
 
 [[edge_functions]]
   # 将路径修改为专属的隐蔽路径
-  path = "/api/v1/tunnel"
+  path = "/api/v2/tunnel"
   function = "proxy"

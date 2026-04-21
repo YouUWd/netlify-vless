@@ -3,12 +3,15 @@ const userID = Deno.env.get("UUID") || "d342d11e-d424-4583-b36e-524ab1f0afa4";
 
 export default async (request, context) => {
   const upgradeHeader = request.headers.get("Upgrade");
-  
-  // 1. 如果不是 WebSocket 请求，直接返回普通的网页内容 (伪装)
+
+  // 拦截普通的 HTTP 请求，直接返回一个伪装页面，彻底避开 context.next() 带来的 404 缓存
   if (!upgradeHeader || upgradeHeader !== "websocket") {
-    // 允许通过特定的路径访问伪装静态站
-    return context.next(); 
+    return new Response("Service is running normally.", { 
+        status: 200,
+        headers: { "Content-Type": "text/plain" }
+    });
   }
+  
 
   // 2. 升级 HTTP 连接为 WebSocket
   const { socket: ws, response } = Deno.upgradeWebSocket(request);
