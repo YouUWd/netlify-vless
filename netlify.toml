@@ -1,0 +1,9 @@
+[build]
+  # 指定静态文件的发布目录
+  publish = "public"
+
+[[edge_functions]]
+  # 拦截所有请求，交由代理脚本处理。为了更隐蔽，你可以把 "/*" 改为特定的路径，如 "/api/v1"
+  path = "/*"
+  # 对应 netlify/edge-functions/ 下的文件名 (不需要 .js 后缀)
+  function = "proxy"
